@@ -13,12 +13,15 @@
 产品安装：<br/>
   1.安装数据，系统基于mysql数据库，先创建rs_report数据库，通过 mysql 命令还原数据文件 rs_report_data.bak 到  rs_report 数据库中。 <br>
   2.安装程序，可直接把 rsbi.war 包放入tomcat中或通过源码编译后安装。 <br>
-  3.修改数据库链接文件database.properties,主要修改 username, password 两项内容。 <br> <br>
+  3.修改数据库链接文件database.properties,主要修改 username, password 两项内容。  <br>
   4.启动tomcat访问 http://localhost:8080/rsbi <br>
 
 <p/>
+
 演示地址： http://bi.rosetech.cn/portal/PortalIndex.action?token=c64106e1-4bef-41d2-a9ce-8b20f4044f26
 <p/>
+
 产品截图：<br/>
+
 ![1](http://www.ruisitech.com/img/ybpn1.png)  <br/>数据可视化<br/>
 ![2](http://www.ruisitech.com/img/ybpn2.png)  <br/>数据建模<br/>
