@@ -1,0 +1,556 @@
+-- MySQL dump 10.13  Distrib 5.5.27, for Win64 (x86)
+--
+-- Host: localhost    Database: rs_report
+-- ------------------------------------------------------
+-- Server version	5.5.27
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `etl_dataset`
+--
+
+DROP TABLE IF EXISTS `etl_dataset`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `etl_dataset` (
+  `dset_Id` varchar(50) NOT NULL DEFAULT '',
+  `ds_id` varchar(50) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `crtdate` datetime DEFAULT NULL,
+  `cfg` text,
+  `primary_table` varchar(50) DEFAULT NULL COMMENT '主表',
+  PRIMARY KEY (`dset_Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `etl_dataset`
+--
+
+LOCK TABLES `etl_dataset` WRITE;
+/*!40000 ALTER TABLE `etl_dataset` DISABLE KEYS */;
+INSERT INTO `etl_dataset` VALUES ('881ec4d509768942aadb519253cbc033','0a5315056128bd0bffb205fbb9602921','3G','2017-05-04 15:41:32','{\"master\":\"dm_kpi_w_card_pandect_m2\",\"joininfo\":[{\"col\":\"AREA_NO\",\"ref\":\"dmcode_city\",\"refKey\":\"CITY_NO\",\"jtype\":\"all\"},{\"col\":\"PAY_MODE\",\"ref\":\"dmcode_pay_type\",\"refKey\":\"PAY_TYPE_ID\",\"jtype\":\"all\"}],\"name\":\"3G\",\"dsid\":\"0a5315056128bd0bffb205fbb9602921\",\"dsetId\":\"881ec4d509768942aadb519253cbc033\",\"cols\":[{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"MONTH_ID\",\"tname\":\"dm_kpi_w_card_pandect_m2\",\"type\":\"String\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"PROV_ID\",\"tname\":\"dm_kpi_w_card_pandect_m2\",\"type\":\"String\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"AREA_NO\",\"tname\":\"dm_kpi_w_card_pandect_m2\",\"type\":\"String\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"PAY_MODE\",\"tname\":\"dm_kpi_w_card_pandect_m2\",\"type\":\"String\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"A0001\",\"tname\":\"dm_kpi_w_card_pandect_m2\",\"type\":\"Double\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"A0002\",\"tname\":\"dm_kpi_w_card_pandect_m2\",\"type\":\"Double\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"A0003\",\"tname\":\"dm_kpi_w_card_pandect_m2\",\"type\":\"Double\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"A0004\",\"tname\":\"dm_kpi_w_card_pandect_m2\",\"type\":\"Double\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"A0005\",\"tname\":\"dm_kpi_w_card_pandect_m2\",\"type\":\"Double\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"A0006\",\"tname\":\"dm_kpi_w_card_pandect_m2\",\"type\":\"Double\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"A0007\",\"tname\":\"dm_kpi_w_card_pandect_m2\",\"type\":\"Double\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"A0008\",\"tname\":\"dm_kpi_w_card_pandect_m2\",\"type\":\"Double\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"A0009\",\"tname\":\"dm_kpi_w_card_pandect_m2\",\"type\":\"Double\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"B0001\",\"tname\":\"dm_kpi_w_card_pandect_m2\",\"type\":\"Double\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"B0002\",\"tname\":\"dm_kpi_w_card_pandect_m2\",\"type\":\"Double\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"CITY_NO\",\"tname\":\"dmcode_city\",\"type\":\"String\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"CITY_DESC\",\"tname\":\"dmcode_city\",\"type\":\"String\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"AREA_NO\",\"tname\":\"dmcode_city\",\"type\":\"String\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"AREA_DESC\",\"tname\":\"dmcode_city\",\"type\":\"String\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"COUNTRY\",\"tname\":\"dmcode_city\",\"type\":\"String\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"ORD\",\"tname\":\"dmcode_city\",\"type\":\"Int\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"PAY_TYPE_ID\",\"tname\":\"dmcode_pay_type\",\"type\":\"String\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"PAY_TYPE_DESC\",\"tname\":\"dmcode_pay_type\",\"type\":\"String\"}],\"dynamic\":[{\"name\":\"hjz\",\"tname\":\"dm_kpi_w_card_pandect_m2\",\"type\":\"Double\",\"expression\":\"A0001 + A0003 \"}]}','dm_kpi_w_card_pandect_m2'),('e2112ac3b46649b5946f17e8909252f7','06b7c1cfc4d819f7c179a419112cf398','logs','2017-04-29 21:46:21','{\"master\":\"d3_dm_logs\",\"name\":\"logs\",\"dsid\":\"06b7c1cfc4d819f7c179a419112cf398\",\"dsetId\":\"e2112ac3b46649b5946f17e8909252f7\",\"cols\":[{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"rid\",\"tname\":\"d3_dm_logs\",\"type\":\"Int\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"ip\",\"tname\":\"d3_dm_logs\",\"type\":\"String\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"date\",\"tname\":\"d3_dm_logs\",\"type\":\"Date\"},{\"dispName\":\"路径\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"path\",\"tname\":\"d3_dm_logs\",\"type\":\"String\"},{\"dispName\":\"浏览器\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"browser\",\"tname\":\"d3_dm_logs\",\"type\":\"String\"},{\"dispName\":\"是否成功\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"isok\",\"tname\":\"d3_dm_logs\",\"type\":\"Int\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"keyword\",\"tname\":\"d3_dm_logs\",\"type\":\"String\"},{\"dispName\":\"\",\"expression\":\"\",\"idx\":0,\"isshow\":true,\"length\":0,\"name\":\"ssyq\",\"tname\":\"d3_dm_logs\",\"type\":\"String\"}],\"dynamic\":[{\"name\":\"year_id\",\"tname\":\"d3_dm_logs\",\"type\":\"String\",\"expression\":\"date_format(date, @%Y@)\"},{\"name\":\"month_id\",\"tname\":\"d3_dm_logs\",\"type\":\"String\",\"expression\":\"date_format(date, @%Y-%m@)\"}]}','d3_dm_logs');
+/*!40000 ALTER TABLE `etl_dataset` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `etl_datasource`
+--
+
+DROP TABLE IF EXISTS `etl_datasource`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `etl_datasource` (
+  `ds_Id` varchar(100) CHARACTER SET latin1 NOT NULL DEFAULT '',
+  `name` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `use_type` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
+  `linktype` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
+  `linkurl` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `uname` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
+  `psd` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
+  PRIMARY KEY (`ds_Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `etl_datasource`
+--
+
+LOCK TABLES `etl_datasource` WRITE;
+/*!40000 ALTER TABLE `etl_datasource` DISABLE KEYS */;
+INSERT INTO `etl_datasource` VALUES ('06b7c1cfc4d819f7c179a419112cf398','test2','jdbc','mysql','jdbc:mysql://localhost/yunbi?useUnicode=true&characterEncoding=UTF8','root','123456'),('0a5315056128bd0bffb205fbb9602921','bi_demo','jdbc','mysql','jdbc:mysql://localhost/bi_demo?useUnicode=true&characterEncoding=UTF8','root','123456'),('51d29e85a6dd4eddae114be627d1ac4e','jdbc/ruisi','jndi','mysql',NULL,NULL,NULL);
+/*!40000 ALTER TABLE `etl_datasource` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `olap_cube_col_meta`
+--
+
+DROP TABLE IF EXISTS `olap_cube_col_meta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `olap_cube_col_meta` (
+  `RID` bigint(11) NOT NULL AUTO_INCREMENT,
+  `cube_ID` varchar(50) DEFAULT NULL,
+  `COL_TYPE` bigint(11) DEFAULT NULL,
+  `tname` varchar(50) DEFAULT NULL,
+  `COL_ID` bigint(11) DEFAULT NULL,
+  `COL_NAME` varchar(255) DEFAULT NULL,
+  `ALIAS` varchar(100) DEFAULT NULL,
+  `ORD` bigint(11) DEFAULT NULL,
+  `CALC` int(2) DEFAULT NULL,
+  PRIMARY KEY (`RID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1553 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `olap_cube_col_meta`
+--
+
+LOCK TABLES `olap_cube_col_meta` WRITE;
+/*!40000 ALTER TABLE `olap_cube_col_meta` DISABLE KEYS */;
+INSERT INTO `olap_cube_col_meta` VALUES (1539,'2',1,'dm_kpi_w_card_pandect_m2',429,'MONTH_ID','MONTH_ID',0,0),(1540,'2',1,'dm_kpi_w_card_pandect_m2',430,'PROV_ID','PROV_ID',1,0),(1541,'2',1,'dm_kpi_w_card_pandect_m2',431,'AREA_NO','AREA_NO',2,0),(1542,'2',1,'dm_kpi_w_card_pandect_m2',432,'PAY_MODE','PAY_MODE',3,0),(1543,'2',2,'dm_kpi_w_card_pandect_m2',226,'sum(A0002)','A0002',0,0),(1544,'2',2,'dm_kpi_w_card_pandect_m2',227,'sum(A0001)','A0001',1,0),(1545,'2',2,'',228,'sum(A0001  ) + sum(A0002  )','testkpi',2,1),(1546,'2',2,'dm_kpi_w_card_pandect_m2',229,'sum(A0001 + A0003 )','hjz',3,1),(1547,'1',1,'d3_dm_logs',419,'path','path',0,0),(1548,'1',1,'d3_dm_logs',420,'browser','browser',1,0),(1549,'1',1,'d3_dm_logs',421,'isok','isok',2,0),(1550,'1',1,'d3_dm_logs',417,'date_format(date, @%Y@)','year_id',3,1),(1551,'1',1,'d3_dm_logs',418,'date_format(date, @%Y-%m@)','month_id',4,1),(1552,'1',2,'d3_dm_logs',211,'sum(rid)','rid',0,0);
+/*!40000 ALTER TABLE `olap_cube_col_meta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `olap_cube_meta`
+--
+
+DROP TABLE IF EXISTS `olap_cube_meta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `olap_cube_meta` (
+  `cube_id` varchar(50) NOT NULL DEFAULT '0',
+  `cube_name` varchar(500) DEFAULT NULL,
+  `cube_desc` varchar(255) DEFAULT NULL,
+  `dsource` varchar(50) DEFAULT NULL,
+  `dset` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`cube_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `olap_cube_meta`
+--
+
+LOCK TABLES `olap_cube_meta` WRITE;
+/*!40000 ALTER TABLE `olap_cube_meta` DISABLE KEYS */;
+INSERT INTO `olap_cube_meta` VALUES ('1','日志分析','test',NULL,'e2112ac3b46649b5946f17e8909252f7'),('2','3G用户分析','test',NULL,'881ec4d509768942aadb519253cbc033');
+/*!40000 ALTER TABLE `olap_cube_meta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `olap_dim_group`
+--
+
+DROP TABLE IF EXISTS `olap_dim_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `olap_dim_group` (
+  `GROUP_ID` varchar(40) NOT NULL,
+  `GROUP_NAME` varchar(50) DEFAULT NULL,
+  `ORD` int(4) DEFAULT NULL,
+  `cube_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`GROUP_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `olap_dim_group`
+--
+
+LOCK TABLES `olap_dim_group` WRITE;
+/*!40000 ALTER TABLE `olap_dim_group` DISABLE KEYS */;
+INSERT INTO `olap_dim_group` VALUES ('5d9411a44614c2a505bf676f1c0d2ffc','时间',3,1),('5f7ba2809721e9ba2aace590b5bea21b','地域',2,2),('64d0603ae1737749bdebf4875f9fff5c','地狱',1,2),('bdf7779698e1b79bbce086ad12972676','地域',1,2);
+/*!40000 ALTER TABLE `olap_dim_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `olap_dim_list`
+--
+
+DROP TABLE IF EXISTS `olap_dim_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `olap_dim_list` (
+  `DIM_ID` bigint(11) NOT NULL AUTO_INCREMENT,
+  `DIM_DESC` varchar(255) DEFAULT NULL,
+  `DIM_TYPE` varchar(50) DEFAULT NULL,
+  `CAS_PARENT` varchar(5) DEFAULT NULL,
+  `col_table_name` varchar(50) DEFAULT NULL,
+  `COL_KEY` varchar(50) DEFAULT NULL,
+  `COL_NAME` varchar(50) DEFAULT NULL,
+  `DIM_ORD` varchar(10) DEFAULT NULL,
+  `GROUP_TYPE` varchar(40) DEFAULT NULL,
+  `KEY_VAL_TYPE` varchar(10) DEFAULT NULL,
+  `ordcol` varchar(50) DEFAULT NULL,
+  `cube_id` int(11) DEFAULT NULL,
+  `dateformat` varchar(50) DEFAULT NULL COMMENT '维度为日期类型的格式',
+  PRIMARY KEY (`DIM_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=433 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `olap_dim_list`
+--
+
+LOCK TABLES `olap_dim_list` WRITE;
+/*!40000 ALTER TABLE `olap_dim_list` DISABLE KEYS */;
+INSERT INTO `olap_dim_list` VALUES (381,'path','frd',NULL,NULL,NULL,NULL,NULL,'','String',NULL,1,NULL),(382,'browser','frd',NULL,NULL,NULL,NULL,NULL,'','String',NULL,1,NULL),(383,'isok','frd',NULL,NULL,NULL,NULL,NULL,'','Int',NULL,1,NULL),(384,'path','frd',NULL,NULL,NULL,NULL,NULL,'','String',NULL,1,NULL),(385,'browser','frd',NULL,NULL,NULL,NULL,NULL,'','String',NULL,1,NULL),(386,'isok','frd',NULL,NULL,NULL,NULL,NULL,'','Int',NULL,1,NULL),(387,'path','frd',NULL,NULL,NULL,NULL,NULL,'','String',NULL,1,NULL),(388,'browser','frd',NULL,NULL,NULL,NULL,NULL,'','String',NULL,1,NULL),(389,'isok','frd',NULL,NULL,'','','asc','','Int','isok',1,''),(390,'ssyq','frd',NULL,NULL,NULL,NULL,NULL,'','String',NULL,1,NULL),(406,'MONTH_ID','frd',NULL,NULL,NULL,NULL,NULL,'','String',NULL,2,NULL),(407,'PROV_ID','frd',NULL,'dmcode_city','AREA_NO','AREA_DESC','','','String','AREA_NO',2,''),(408,'AREA_NO','frd',NULL,'dmcode_city','CITY_NO','CITY_DESC','','','String','CITY_NO',2,''),(409,'PAY_MODE','frd',NULL,'dmcode_pay_type','PAY_TYPE_ID','PAY_TYPE_DESC','','','String','PAY_TYPE_ID',2,''),(415,'year_id','frd',NULL,NULL,NULL,NULL,NULL,'','String',NULL,1,NULL),(416,'year_id','frd',NULL,NULL,NULL,NULL,NULL,'','String',NULL,1,NULL),(417,'年','frd',NULL,'','','','','5d9411a44614c2a505bf676f1c0d2ffc','String','',1,''),(418,'月','frd',NULL,'','','','','5d9411a44614c2a505bf676f1c0d2ffc','String','',1,''),(419,'路径','frd',NULL,'','','','','','String','',1,''),(420,'browser','frd',NULL,NULL,NULL,NULL,NULL,'','String',NULL,1,NULL),(421,'isok','frd',NULL,NULL,NULL,NULL,NULL,'','Int',NULL,1,NULL),(422,'MONTH_ID','frd',NULL,NULL,NULL,NULL,NULL,'','String',NULL,2,NULL),(423,'PROV_ID','frd',NULL,NULL,NULL,NULL,NULL,'','String',NULL,2,NULL),(424,'AREA_NO','frd',NULL,NULL,NULL,NULL,NULL,'','String',NULL,2,NULL),(425,'PAY_MODE','frd',NULL,NULL,NULL,NULL,NULL,'','String',NULL,2,NULL),(426,'MONTH_ID','frd',NULL,NULL,NULL,NULL,NULL,'','String',NULL,2,NULL),(427,'PROV_ID2','frd',NULL,'','','','','64d0603ae1737749bdebf4875f9fff5c','String','',2,''),(428,'AREA_NO','frd',NULL,NULL,NULL,NULL,NULL,'','String',NULL,2,NULL),(429,'MONTH_ID','frd',NULL,'','','','','','String','',2,''),(430,'PROV_ID','frd',NULL,'dmcode_city','AREA_NO','AREA_DESC','','bdf7779698e1b79bbce086ad12972676','String','AREA_NO',2,''),(431,'AREA_NO','frd',NULL,'dmcode_city','CITY_NO','CITY_DESC','','bdf7779698e1b79bbce086ad12972676','String','CITY_NO',2,''),(432,'PAY_MODE','frd',NULL,'dmcode_pay_type','PAY_TYPE_ID','PAY_TYPE_DESC','','','String','PAY_TYPE_ID',2,'');
+/*!40000 ALTER TABLE `olap_dim_list` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `olap_kpi_list`
+--
+
+DROP TABLE IF EXISTS `olap_kpi_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `olap_kpi_list` (
+  `RID` bigint(11) NOT NULL AUTO_INCREMENT,
+  `KPI_NAME` varchar(50) DEFAULT NULL,
+  `KPI_DESC_KEY` varchar(255) DEFAULT NULL,
+  `UNIT` varchar(10) DEFAULT NULL,
+  `FMT` varchar(50) DEFAULT NULL,
+  `AGGRE` varchar(10) DEFAULT NULL,
+  `RATE` bigint(11) DEFAULT NULL,
+  `CALC_KPI` int(3) DEFAULT NULL,
+  `cube_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`RID`)
+) ENGINE=InnoDB AUTO_INCREMENT=230 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `olap_kpi_list`
+--
+
+LOCK TABLES `olap_kpi_list` WRITE;
+/*!40000 ALTER TABLE `olap_kpi_list` DISABLE KEYS */;
+INSERT INTO `olap_kpi_list` VALUES (189,'rid','','','','count',NULL,0,1),(190,'rid',NULL,NULL,NULL,'sum',NULL,0,1),(191,'访问次数','','','','count',NULL,0,1),(211,'rid',NULL,NULL,NULL,'sum',NULL,0,1),(217,'A0002',NULL,NULL,NULL,'sum',NULL,0,2),(218,'A0001',NULL,NULL,NULL,'sum',NULL,0,2),(219,'testkpi','','','','sum',NULL,1,2),(221,'hjz','','','','avg',NULL,0,2),(222,'hjz',NULL,NULL,NULL,'sum',NULL,0,2),(223,'A0001',NULL,NULL,NULL,'sum',NULL,0,2),(224,'A0002',NULL,NULL,NULL,'sum',NULL,0,2),(225,'A0005',NULL,NULL,NULL,'sum',NULL,0,2),(226,'A0002',NULL,NULL,NULL,'sum',NULL,0,2),(227,'A0001',NULL,NULL,NULL,'sum',NULL,0,2),(228,'testkpi','','','','sum',NULL,1,2),(229,'hjz',NULL,NULL,NULL,'sum',NULL,0,2);
+/*!40000 ALTER TABLE `olap_kpi_list` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `portal_3greport_type`
+--
+
+DROP TABLE IF EXISTS `portal_3greport_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `portal_3greport_type` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `crtuser` int(11) DEFAULT NULL,
+  `crtdate` datetime DEFAULT NULL,
+  `ord` int(9) DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='3g报表分类';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `portal_3greport_type`
+--
+
+LOCK TABLES `portal_3greport_type` WRITE;
+/*!40000 ALTER TABLE `portal_3greport_type` DISABLE KEYS */;
+INSERT INTO `portal_3greport_type` VALUES (1,'营运监控','',1,'2017-05-07 13:44:04',1),(2,'经营盘点','',1,'2017-05-07 13:44:46',2);
+/*!40000 ALTER TABLE `portal_3greport_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `portal_user_save`
+--
+
+DROP TABLE IF EXISTS `portal_user_save`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `portal_user_save` (
+  `user_Id` int(11) NOT NULL DEFAULT '0',
+  `pageinfo` text,
+  `updatedate` datetime DEFAULT NULL,
+  `crtdate` datetime DEFAULT NULL,
+  `pageId` varchar(50) NOT NULL DEFAULT '',
+  `pagename` varchar(255) DEFAULT NULL,
+  `is3g` varchar(5) DEFAULT NULL COMMENT '是否在移动端访问的报表',
+  `cata_id` int(11) DEFAULT NULL COMMENT '报表所属目录，在3G报表中有效',
+  PRIMARY KEY (`pageId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `portal_user_save`
+--
+
+LOCK TABLES `portal_user_save` WRITE;
+/*!40000 ALTER TABLE `portal_user_save` DISABLE KEYS */;
+/*!40000 ALTER TABLE `portal_user_save` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `report_collect`
+--
+
+DROP TABLE IF EXISTS `report_collect`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `report_collect` (
+  `report_id` varchar(50) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `crtdate` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='报表收藏夹';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `report_collect`
+--
+
+LOCK TABLES `report_collect` WRITE;
+/*!40000 ALTER TABLE `report_collect` DISABLE KEYS */;
+INSERT INTO `report_collect` VALUES ('b9fb70edf25f4ecab7b1714fe6461d8d',1,'2017-05-07 17:14:11'),('594b86a0375b4e78926947dd68e5f99c',1,'2017-05-07 17:16:56');
+/*!40000 ALTER TABLE `report_collect` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `role_data_rela`
+--
+
+DROP TABLE IF EXISTS `role_data_rela`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `role_data_rela` (
+  `role_id` int(11) NOT NULL DEFAULT '0',
+  `data_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `role_data_rela`
+--
+
+LOCK TABLES `role_data_rela` WRITE;
+/*!40000 ALTER TABLE `role_data_rela` DISABLE KEYS */;
+INSERT INTO `role_data_rela` VALUES (2,41),(2,37),(2,49),(2,50);
+/*!40000 ALTER TABLE `role_data_rela` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `role_menu_rela`
+--
+
+DROP TABLE IF EXISTS `role_menu_rela`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `role_menu_rela` (
+  `MENU_ID` bigint(11) NOT NULL,
+  `ROLE_ID` varchar(255) NOT NULL,
+  PRIMARY KEY (`MENU_ID`,`ROLE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `role_menu_rela`
+--
+
+LOCK TABLES `role_menu_rela` WRITE;
+/*!40000 ALTER TABLE `role_menu_rela` DISABLE KEYS */;
+INSERT INTO `role_menu_rela` VALUES (1,'1'),(2,'1'),(3,'1'),(4,'1'),(40,'1'),(40,'2'),(53,'1'),(53,'2'),(62,'1'),(62,'2'),(84,'1'),(84,'2'),(85,'1'),(85,'2'),(86,'1'),(86,'2'),(87,'1'),(87,'2');
+/*!40000 ALTER TABLE `role_menu_rela` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `role_user_rela`
+--
+
+DROP TABLE IF EXISTS `role_user_rela`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `role_user_rela` (
+  `ROLE_ID` bigint(11) NOT NULL,
+  `USER_ID` varchar(255) NOT NULL,
+  PRIMARY KEY (`ROLE_ID`,`USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `role_user_rela`
+--
+
+LOCK TABLES `role_user_rela` WRITE;
+/*!40000 ALTER TABLE `role_user_rela` DISABLE KEYS */;
+INSERT INTO `role_user_rela` VALUES (1,'1'),(2,'3');
+/*!40000 ALTER TABLE `role_user_rela` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sc_app_token`
+--
+
+DROP TABLE IF EXISTS `sc_app_token`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sc_app_token` (
+  `user_id` int(11) DEFAULT NULL,
+  `token` varchar(255) NOT NULL DEFAULT '',
+  `crtdate` datetime DEFAULT NULL,
+  `channel_id` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='储存app 端的 token';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sc_app_token`
+--
+
+LOCK TABLES `sc_app_token` WRITE;
+/*!40000 ALTER TABLE `sc_app_token` DISABLE KEYS */;
+INSERT INTO `sc_app_token` VALUES (1,'44aebdcc3791235d9eb0ba2228fcd7cf','2017-05-07 17:15:42',NULL),(1,'6e140fdccddf7d6d7fc10cf00897e0ec','2017-05-07 17:09:34',NULL),(1,'787feb3f2cce518ee4f5d37acdd80c82','2017-05-07 16:53:17','5296164030253079339'),(1,'b50208bb9537de3b84e642c8b71918a4','2017-05-07 16:53:46','5296164030253079339'),(1,'f81f8a7eba7ad9bf43c9bea24680f9bf','2017-05-07 17:09:50',NULL);
+/*!40000 ALTER TABLE `sc_app_token` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sc_login_user`
+--
+
+DROP TABLE IF EXISTS `sc_login_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sc_login_user` (
+  `USER_ID` int(11) NOT NULL DEFAULT '0',
+  `LOGIN_NAME` varchar(200) DEFAULT NULL,
+  `PASSWORD` varchar(40) DEFAULT NULL,
+  `GENDER` varchar(10) DEFAULT NULL,
+  `EMAIL` varchar(100) DEFAULT NULL,
+  `LOG_DATE` datetime DEFAULT NULL,
+  `SITE_ID` bigint(11) DEFAULT NULL,
+  `STAFF_ID` varchar(30) DEFAULT NULL,
+  `STATE` varchar(1) DEFAULT NULL,
+  `DATE_START` datetime DEFAULT NULL,
+  `DATE_END` datetime DEFAULT NULL,
+  `LOG_CNT` bigint(11) DEFAULT '0',
+  `OFFICETEL` varchar(20) DEFAULT NULL,
+  `MOBILEPHONE` varchar(20) DEFAULT NULL,
+  `policy` int(11) DEFAULT NULL COMMENT '是否决策者',
+  `dept_id` int(11) DEFAULT NULL,
+  `channel_id` varchar(60) DEFAULT NULL COMMENT '设备ID',
+  `space_size` int(9) DEFAULT NULL COMMENT '单位MB',
+  PRIMARY KEY (`USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sc_login_user`
+--
+
+LOCK TABLES `sc_login_user` WRITE;
+/*!40000 ALTER TABLE `sc_login_user` DISABLE KEYS */;
+INSERT INTO `sc_login_user` VALUES (1,'系统管理员','e10adc3949ba59abbe56e057f20f883e','男','','2017-05-08 15:47:13',3,'admin','1','2013-01-01 00:00:00','2019-01-01 00:00:00',1368,'','',0,4,NULL,100000),(3,'测试账号','e10adc3949ba59abbe56e057f20f883e','男','','2017-03-27 16:03:33',3,'test','1','2016-07-21 10:04:20','2019-07-21 10:04:20',315,'','',0,0,NULL,100);
+/*!40000 ALTER TABLE `sc_login_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sc_menu`
+--
+
+DROP TABLE IF EXISTS `sc_menu`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sc_menu` (
+  `MENU_ID` bigint(11) NOT NULL DEFAULT '0',
+  `MENU_PID` bigint(11) DEFAULT NULL,
+  `MENU_NAME` varchar(50) DEFAULT NULL,
+  `MENU_DESC` varchar(200) DEFAULT NULL,
+  `MENU_DATE` datetime DEFAULT NULL,
+  `MENU_ORDER` bigint(11) DEFAULT NULL,
+  `MENU_URL` varchar(200) DEFAULT NULL,
+  `ROOT_LINK` int(6) DEFAULT NULL,
+  PRIMARY KEY (`MENU_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sc_menu`
+--
+
+LOCK TABLES `sc_menu` WRITE;
+/*!40000 ALTER TABLE `sc_menu` DISABLE KEYS */;
+INSERT INTO `sc_menu` VALUES (1,0,'权限管理','','2015-12-13 14:51:26',100,'../frame/Frame3!syspage.action?defaultId=1',NULL),(2,1,'用户管理','','2015-05-20 08:52:50',2,'../control/extControl?serviceid=frame.User',NULL),(3,1,'角色管理','','2015-05-20 08:52:53',3,'../control/extControl?serviceid=frame.Role&methodId=list',NULL),(4,1,'菜单管理','','2015-05-20 08:53:00',4,'../control/extControl?serviceid=frame.Menu',NULL),(40,0,'数据报表','','2016-12-13 17:32:10',10,'../portal/PortalIndex.action',1),(53,0,'数据建模','','2017-04-23 16:38:25',-3,'../model/ModelIndex.action',NULL),(62,0,'移动BI','','2017-05-01 18:23:46',50,'../frame/Frame3!syspage.action?defaultId=62',NULL),(84,62,'移动bi说明','介绍移动BI相关功能，并帮组你正确使用移动BI。','2017-05-01 18:24:09',1,'../mobile/MbIntro.action',NULL),(85,62,'分类管理','管理手机端报表的分类，您可以在这里创建、编辑、删除手机报表分类。','2017-05-07 12:09:30',2,'../m/MobReportType.action',NULL),(86,62,'创建手机报表','创建一个在手机端访问的报表。','2016-08-10 14:35:45',3,'../portal/PortalIndex!customization.action?is3g=y&menus={print:0,export:0}',NULL),(87,62,'手机报表管理','管理已创建的手机端报表, 可以进行删除及修改操作。','2017-05-07 12:27:21',4,'../m/PushManager.action',NULL);
+/*!40000 ALTER TABLE `sc_menu` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sc_role`
+--
+
+DROP TABLE IF EXISTS `sc_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sc_role` (
+  `ROLE_ID` bigint(11) NOT NULL AUTO_INCREMENT,
+  `ROLE_NAME` varchar(50) DEFAULT NULL,
+  `ROLE_DESC` varchar(255) DEFAULT NULL,
+  `CREATE_DATE` datetime DEFAULT NULL,
+  `CREATE_USER` varchar(35) DEFAULT NULL,
+  `ORD` bigint(11) DEFAULT NULL,
+  PRIMARY KEY (`ROLE_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sc_role`
+--
+
+LOCK TABLES `sc_role` WRITE;
+/*!40000 ALTER TABLE `sc_role` DISABLE KEYS */;
+INSERT INTO `sc_role` VALUES (1,'管理员',NULL,NULL,NULL,1),(2,'客户人员','客户人员','2015-08-19 16:12:39','admin',2);
+/*!40000 ALTER TABLE `sc_role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_data_rela`
+--
+
+DROP TABLE IF EXISTS `user_data_rela`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_data_rela` (
+  `user_id` int(11) DEFAULT NULL,
+  `data_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_data_rela`
+--
+
+LOCK TABLES `user_data_rela` WRITE;
+/*!40000 ALTER TABLE `user_data_rela` DISABLE KEYS */;
+INSERT INTO `user_data_rela` VALUES (3,43),(3,42);
+/*!40000 ALTER TABLE `user_data_rela` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_menu_rela`
+--
+
+DROP TABLE IF EXISTS `user_menu_rela`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_menu_rela` (
+  `MENU_ID` bigint(11) NOT NULL,
+  `USER_ID` bigint(11) NOT NULL,
+  PRIMARY KEY (`MENU_ID`,`USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_menu_rela`
+--
+
+LOCK TABLES `user_menu_rela` WRITE;
+/*!40000 ALTER TABLE `user_menu_rela` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_menu_rela` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-05-08 15:50:21

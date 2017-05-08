@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="compress-js" basedir="." default="compress">
+	<description>
+		compress-js
+    </description>
+	
+	<property name="src.dir" value="app/resource/js" />
+	<property name="yuicompressor" value="bin/yuicompressor-2.4.7.jar" />
+	
+	<!-- 合并文件 -->
+	<target name="concat" depends="" description="concat code">
+		<concat destfile="${src.dir}/model-compress.js" encoding="utf-8" fixlastline="on">
+			<fileset dir="${src.dir}" includes="model.js" />
+		 	<fileset dir="${src.dir}" includes="model-dsource.js" />
+			<fileset dir="${src.dir}" includes="model-dset.js" />
+			<fileset dir="${src.dir}" includes="model-cube.js" />
+		</concat>
+		
+		
+		<concat destfile="${src.dir}/portal-compress.js" encoding="utf-8" fixlastline="on">
+			<fileset dir="${src.dir}" includes="portal.js" />
+		 	<fileset dir="${src.dir}" includes="portal-chart.js" />
+		 	<fileset dir="${src.dir}" includes="portal-comp.js" />
+		 	<fileset dir="${src.dir}" includes="portal-param.js" />
+		 	<fileset dir="${src.dir}" includes="portal-table.js" />
+		</concat>
+		
+	</target>
+	
+	<!-- 压缩文件 -->
+	 <target name="compress" depends="concat">  
+	        <apply executable="java" parallel="false" failonerror="true" dest="${src.dir}/" append="false" force="true">  
+	            <!--单个文件压缩-->     
+	        	<fileset dir='${src.dir}/' >
+	        		<include name="model-compress.js"/>
+	        		<include name="portal-compress.js"/>
+	        	</fileset>		                  
+	    
+	            <arg line="-jar" />  
+	            <arg path="${yuicompressor}" />  
+	            <arg line="--charset utf-8" />  
+	            <srcfile />  
+	            <arg line="-o" />  
+	            <mapper type="glob" from="*.js" to="*.js" />  
+	            <targetfile />  
+	        </apply>  
+	    </target>  
+
+</project>
