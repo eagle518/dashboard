@@ -23,5 +23,7 @@
 
 产品截图：<br/>
 
-![1](http://www.ruisitech.com/img/ybpn1.png)  <br/>数据可视化<br/>
-![2](http://www.ruisitech.com/img/ybpn2.png)  <br/>数据建模<br/>
+数据可视化<br/>
+![1](http://www.ruisitech.com/img/ybpn1.png)  <br/>
+数据建模<br/>
+![2](http://www.ruisitech.com/img/ybpn2.png)  <br/>
