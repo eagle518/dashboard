@@ -18,12 +18,16 @@
 
 <p/>
 
-演示地址： http://bi.rosetech.cn/portal/PortalIndex.action?token=c64106e1-4bef-41d2-a9ce-8b20f4044f26
+演示地址： http://bi.rosetech.cn/ <br/>
+账号/口令：test/123456 <br/>
+
 <p/>
 
 产品截图：<br/>
 
 数据可视化<br/>
-![1](http://www.ruisitech.com/img/ybpn1.png)  <br/>
+![1](http://www.ruisitech.com/img/ybpn1.png?v1)  <br/>
 数据建模<br/>
-![2](http://www.ruisitech.com/img/ybpn2.png)  <br/>
+![2](http://www.ruisitech.com/img/ybpn2.png?v2)  <br/>
+APP访问<br/>
+![3](http://www.ruisitech.com/img/3g/IMG_1292.PNG?v2)  <br/>
