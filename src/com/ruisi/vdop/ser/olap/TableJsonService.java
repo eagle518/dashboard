@@ -274,7 +274,7 @@ public class TableJsonService {
 			JSONObject obj = arrays.getJSONObject(i);
 			String type = obj.getString("type");
 			String issum = (String)obj.get("issum");
-			String casparent = obj.get("iscas") == null ? "" : obj.get("iscas").toString();
+			//String casparent = obj.get("iscas") == null ? "" : obj.get("iscas").toString();
 			
 			if(type.equals("kpiOther")){
 				
@@ -407,9 +407,8 @@ public class TableJsonService {
 						cf.setSize(size);
 					}
 					**/
-					if("y".equals(casparent)){
-						cf.setCasParent(true);
-					}
+					cf.setCasParent(true);
+					
 					String top = (String)obj.get("top");
 					if(top != null && top.length() > 0){
 						cf.setTop(new Integer(top));
@@ -466,9 +465,8 @@ public class TableJsonService {
 							cf.setStart("${s.defDay}");
 							cf.setSize(size);
 						}**/
-						if("y".equals(casparent)){
-							cf.setCasParent(true);
-						}
+						cf.setCasParent(true);
+						
 						String top = (String)obj.get("top");
 						if(top != null && top.length() > 0){
 							cf.setTop(new Integer(top));
@@ -527,9 +525,8 @@ public class TableJsonService {
 						cf.setSize(size);
 					}
 					**/
-					if("y".equals(casparent)){
-						cf.setCasParent(true);
-					}
+					cf.setCasParent(true);
+					
 					String top = (String)obj.get("top");
 					if(top != null && top.length() > 0){
 						cf.setTop(new Integer(top));
@@ -585,9 +582,8 @@ public class TableJsonService {
 							cf.setSize(size);
 						}
 						**/
-						if("y".equals(casparent)){
-							cf.setCasParent(true);
-						}
+						cf.setCasParent(true);
+						
 						String top = (String)obj.get("top");
 						if(top != null && top.length() > 0){
 							cf.setTop(new Integer(top));
@@ -646,9 +642,8 @@ public class TableJsonService {
 						cf.setAlias(tableColKey);
 						cf.setAliasDesc(tableColName);
 					}
-					if("y".equals(casparent)){
-						cf.setCasParent(true);
-					}
+					cf.setCasParent(true);
+					
 					String top = (String)obj.get("top");
 					if(top != null && top.length() > 0){
 						cf.setTop(new Integer(top));
@@ -743,9 +738,8 @@ public class TableJsonService {
 							cf.setAlias(tableColKey);
 							cf.setAliasDesc(tableColName);
 						}
-						if("y".equals(casparent)){
-							cf.setCasParent(true);
-						}
+						cf.setCasParent(true);
+						
 						String top = (String)obj.get("top");
 						if(top != null && top.length() > 0){
 							cf.setTop(new Integer(top));

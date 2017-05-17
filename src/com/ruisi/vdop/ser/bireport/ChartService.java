@@ -2,6 +2,7 @@ package com.ruisi.vdop.ser.bireport;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,21 +10,29 @@ import java.util.Map;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import com.ruisi.ext.engine.ExtConstants;
 import com.ruisi.ext.engine.init.TemplateManager;
 import com.ruisi.ext.engine.util.IdCreater;
 import com.ruisi.ext.engine.view.context.ExtContext;
 import com.ruisi.ext.engine.view.context.MVContext;
+import com.ruisi.ext.engine.view.context.MVContextImpl;
+import com.ruisi.ext.engine.view.context.chart.ChartContext;
+import com.ruisi.ext.engine.view.context.chart.ChartContextImpl;
+import com.ruisi.ext.engine.view.context.chart.ChartKeyContext;
 import com.ruisi.ext.engine.view.context.dc.grid.GridDataCenterContext;
 import com.ruisi.ext.engine.view.context.dc.grid.GridDataCenterContextImpl;
 import com.ruisi.ext.engine.view.context.dc.grid.GridSetConfContext;
+import com.ruisi.ext.engine.view.context.dsource.DataSourceContext;
 import com.ruisi.ext.engine.view.context.form.InputField;
 import com.ruisi.ext.engine.view.context.html.TextContext;
 import com.ruisi.ext.engine.view.context.html.TextContextImpl;
 import com.ruisi.vdop.ser.bireport.TableSqlJsonVO.DimInfo;
 import com.ruisi.vdop.ser.bireport.TableSqlJsonVO.KpiFilter;
 import com.ruisi.vdop.ser.bireport.TableSqlJsonVO.KpiInfo;
+import com.ruisi.vdop.ser.portal.PortalPageService;
 import com.ruisi.vdop.service.frame.DataControlInterface;
 import com.ruisi.vdop.util.VDOPUtils;
+import com.ruisi.vdop.util.VdopConstant;
 
 public class ChartService {
 	
@@ -85,6 +94,232 @@ public class ChartService {
 		}
 	
 		return dim;
+	}
+	
+	public MVContext json2MV(JSONObject chartJson, JSONArray kpiJson, String compId,JSONArray params, boolean xlsdata) throws Exception{
+		TableSqlJsonVO sqlVO = json2ChartSql(chartJson, kpiJson);
+		
+		//创建MV
+		MVContext mv = new MVContextImpl();
+		mv.setChildren(new ArrayList());
+		String formId = ExtConstants.formIdPrefix + IdCreater.create();
+		mv.setFormId(formId);
+		mv.setMvid(deftMvId);
+		
+	
+		if(!xlsdata){
+			//创建图形钻取项
+			this.createChartDrill(mv, sqlVO, compId);
+		}
+		
+		//创建chart
+		ChartContext cr = this.json2Chart(chartJson, sqlVO, false);
+		cr.setXlsData(xlsdata);
+		
+		DimInfo txcol = null;
+		DimInfo tscol = null;
+		
+			
+		//没选维度, 剔除了param类型维度
+		if(sqlVO.getChartDimCount() == 0){
+			//自动生成 xcol, scol
+			txcol = new DimInfo();
+			txcol.setColDesc("合计");
+			
+			tscol = new DimInfo();
+			String tp = chartJson.getString("type");
+			if(tp.equals("scatter")){
+				tscol.setColDesc("合计");
+			}else{
+				tscol.setColDesc(sqlVO.getKpis().get(0).getKpiName());
+			}
+		}else if(sqlVO.getChartDimCount() == 1){ //只选一个维度
+			JSONObject obj = chartJson.getJSONObject("xcol");
+			//选的x坐标
+			if(obj != null && !obj.isNullObject() && !obj.isEmpty()){
+				txcol = null;
+				tscol = sqlVO.getDims().get(0);
+			}
+			//选的scol坐标
+			obj = chartJson.getJSONObject("scol");
+			if(obj != null && !obj.isNullObject() && !obj.isEmpty()){
+				txcol = new DimInfo();
+				txcol.setColDesc("合计");
+				tscol = null;
+			}
+			
+		}else{ //选两个维度
+			
+		}
+		
+		String sql = this.createSql(sqlVO, txcol, tscol, params, 0);
+		GridDataCenterContext dc = this.createDataCenter(sql, sqlVO);
+		cr.setRefDataCenter(dc.getId());
+		if(mv.getGridDataCenters() == null){
+			mv.setGridDataCenters(new HashMap<String, GridDataCenterContext>());
+		}
+		mv.getGridDataCenters().put(dc.getId(), dc);
+		
+		mv.getChildren().add(cr);
+		cr.setParent(mv);
+		
+		Map crs = new HashMap();
+		crs.put(cr.getId(), cr);
+		mv.setCharts(crs);
+		
+		String dsid = PortalPageService.createDsource(dsource, mv);
+		dc.getConf().setRefDsource(dsid);
+		
+		return mv;
+	}
+	
+	public ChartContext json2Chart(JSONObject chartJson, TableSqlJsonVO sqlVO, boolean is3g){
+		ChartContext ctx = new ChartContextImpl();
+		ctx.setLabel((String)chartJson.get("label"));
+		//设置x
+		JSONObject obj = chartJson.getJSONObject("xcol");
+		if(obj != null && !obj.isNullObject() && !obj.isEmpty()){
+			String tp = obj.getString("type");
+			String alias = (obj.getString("alias"));
+			String key = (String)obj.get("tableColKey");
+			String txt = (String)obj.get("tableColName");
+			if("day".equals(tp)){
+				ctx.setDateType(tp);
+				ctx.setDateTypeFmt((String)obj.get("dateformat"));
+			}
+			if(key != null && key.length() > 0 && txt != null && txt.length() > 0){  //只有在维度关联了维度表后才进行判断
+				ctx.setXcolDesc(key); //用来关联ID,用在钻取中
+				ctx.setXcol(txt);
+			}else{
+				ctx.setXcolDesc(alias);
+				ctx.setXcol(alias);
+			}
+			this.xcolId = obj.getInt("id");
+		}else{
+			ctx.setXcol("x");
+			ctx.setXcolDesc("x");
+		}
+		
+		
+		KpiInfo kpiInfo = sqlVO.getKpis().get(0);
+		String y = kpiInfo.getAlias();
+		ctx.setYcol(y);
+		
+		//如果是散点图或气泡图，需要 y2col
+		if(sqlVO.getKpis().size() > 1){
+			ctx.setY2col(sqlVO.getKpis().get(1).getAlias());
+		}
+		if(sqlVO.getKpis().size() > 2){
+			ctx.setY3col(sqlVO.getKpis().get(2).getAlias());
+		}
+		
+		JSONObject scol = chartJson.getJSONObject("scol");
+		if(scol != null && !scol.isNullObject() && !scol.isEmpty()){
+			String tp2 = scol.getString("type");
+			String tableName = (String)scol.get("tableName");
+			ctx.setScol(scol.getString("alias"));
+			if(tableName != null && tableName.length() > 0){  //只有在维度关联了维度表后才进行判断
+				if("frd".equals(tp2) || "year".equals(tp2) || "quarter".equals(tp2)){
+					ctx.setScol(ctx.getScol() + "_desc");
+				}
+			}
+		}else{
+			ctx.setScol("ser");
+		}
+		
+		ctx.setShape(chartJson.getString("type"));
+		if(is3g){
+			//手机页面，宽度设置为100%
+			ctx.setWidth("100%");
+		}else{
+			ctx.setWidth("auto");
+		}
+		ctx.setHeight("240");
+		
+		//设置ID
+		String chartId = ExtConstants.chartIdPrefix + IdCreater.create();
+		ctx.setId(chartId);
+		
+		//设置配置信息
+		List<ChartKeyContext> properties = new ArrayList();
+		ChartKeyContext val1 = new ChartKeyContext("margin", is3g?"30, 20, 50, 75":"30, 20, 50, 90");  //手机页面减少左边距
+		properties.add(val1);
+		
+		//设置倍率  (在SQL中获取基本单位，运算单位（万、千、百万）等通过倍率获取 )
+		if(kpiInfo.getRate() != null){
+			ctx.setRate(kpiInfo.getRate());
+		}
+		if(sqlVO.getKpis().size() > 1){
+			ctx.setRate2(sqlVO.getKpis().get(1).getRate());
+		}
+		if(sqlVO.getKpis().size() > 2){
+			ctx.setRate3(sqlVO.getKpis().get(2).getRate());
+		}
+		
+		properties.add(new ChartKeyContext("ydesc",kpiInfo.getKpiName()+ "(" + formatUnits(kpiInfo) +kpiInfo.getUnit()+")"));
+		
+		//格式化配置信息
+		if(kpiInfo.getFmt() != null && kpiInfo.getFmt().length() > 0){
+			properties.add(new ChartKeyContext("formatCol","kpi_fmt"));
+		}
+		
+		if(kpiInfo.getUnit() != null && kpiInfo.getUnit().length() > 0){
+			properties.add(new ChartKeyContext("unitCol","kpi_unit"));
+		}
+		//启用钻取
+		properties.add(new ChartKeyContext("action","drillChart"));
+		
+		if("pie".equals(ctx.getShape())){
+			properties.add(new ChartKeyContext("showLegend","true"));
+			//ctx.setHeight("280"); //重新设置高度,宽度
+			if(!is3g){
+				ctx.setWidth("600");
+			}
+		}
+		if("gauge".equals(ctx.getShape()) && !is3g){
+			ctx.setWidth("210");
+		}
+		if("radar".equals(ctx.getShape()) && !is3g){
+			ctx.setHeight("340"); //重新设置雷达图的高度
+		}
+		if("map".equals(ctx.getShape()) && !is3g){
+			ctx.setWidth("600");
+			ctx.setHeight("350");
+		}
+		if("bubble".equals(ctx.getShape()) || "scatter".equals(ctx.getShape())){
+			KpiInfo kpiInfo2 = sqlVO.getKpis().get(1);
+			//对于散点图和气泡图，需要设置xdesc
+			properties.add(new ChartKeyContext("xdesc", kpiInfo2.getKpiName() + "(" + formatUnits(kpiInfo2) +kpiInfo2.getUnit()+")"));
+			properties.add(new ChartKeyContext("formatCol2", kpiInfo2.getFmt()));
+			properties.add(new ChartKeyContext("unitCol2", kpiInfo2.getUnit()));
+			//设置气泡图
+			if("bubble".equals(ctx.getShape())){
+				KpiInfo kpiInfo3 = sqlVO.getKpis().get(2);
+				properties.add(new ChartKeyContext("formatCol3", kpiInfo3.getFmt()));
+				properties.add(new ChartKeyContext("unitCol3", kpiInfo3.getUnit()));
+			}
+		}
+		//对于曲线图、柱状图设置图例位置
+		if("line".equals(ctx.getShape()) || "column".equals(ctx.getShape())){
+			properties.add(new ChartKeyContext("legendLayout","horizontal"));
+		}
+		//饼图不显示Legend
+		if("pie".equals(ctx.getShape())){
+			properties.add(new ChartKeyContext("showLegend","false"));
+		}
+		
+		//如果是地图，需要设置地图的 mapJson
+		if("map".equals(ctx.getShape())){
+			properties.add(new ChartKeyContext("mapJson","china.json"));
+		}
+		//手机页面，横轴旋转角度
+		if(is3g){
+			properties.add(new ChartKeyContext("routeXaxisLable","-45"));
+		}
+		
+		ctx.setProperties(properties);
+		
+		return ctx;
 	}
 	
 	public TableSqlJsonVO json2ChartSql(JSONObject chartJson, JSONArray kpiJson){
@@ -372,8 +607,8 @@ public class ChartService {
 	 * @return
 	 * @throws ParseException
 	 */
-	public String createSql(TableSqlJsonVO sqlVO, DimInfo xcol, DimInfo ser, Map tinfo, JSONArray params, int release) throws ParseException{
-		//Map tinfo = selectTable(sqlVO);
+	public String createSql(TableSqlJsonVO sqlVO, DimInfo xcol, DimInfo ser, JSONArray params, int release) throws ParseException{
+		Map<String, String> tableAlias = PortalPageService.createTableAlias(dset);
 		
 		StringBuffer sql = new StringBuffer();
 		
@@ -383,10 +618,15 @@ public class ChartService {
 			DimInfo dim = dims.get(i);
 			String key = dim.getTableColKey();
 			String txt = dim.getTableColName();
+			String tname = dim.getTableName();
 			if(key != null && txt != null && key.length() >0 && txt.length() >0){
-				sql.append(key+", " + txt + ",");
+				sql.append(tableAlias.get(tname)+"."+key+", " + tableAlias.get(tname) +"."+ txt + ",");
 			}else{
-				sql.append(" "+dim.getColName()+" "+dim.getAlias()+", ");
+				if(dim.getCalc() == 1){ 
+					sql.append(" "+dim.getColName()+" "+dim.getAlias()+", ");
+				}else{
+					sql.append(" " + tableAlias.get(dim.getTname()) + "."+dim.getColName()+" "+dim.getAlias()+", ");
+				}
 			}
 			
 		}
@@ -446,26 +686,27 @@ public class ChartService {
 			}
 		}
 		
-		//如果名字是SQL，加括号，是表名不加括号
-		String tname = (String)tinfo.get("tname");
-		String tsql = (String)tinfo.get("sql");
-		if(tsql != null && tsql.length() > 0){
-			sql.append(" from ("+tsql+") t ");
-		}else{
-			sql.append(" from "+tname+" t ");
-		}
-		for(DimInfo dim : dims){
-			if(dim.getType().equals("frd") || "year".equals(dim.getType()) || "quarter".equals(dim.getType())){
-				if(dim.getTableName().length() > 0){
-					sql.append("," + dim.getTableName() + " t" + dim.getId());
-					
-				}
+		JSONArray joinTabs = (JSONArray)dset.get("joininfo");
+		String master = dset.getString("master");
+		sql.append(" from " + master + " a0");
+		
+		for(int i=0; joinTabs!=null&&i<joinTabs.size(); i++){  //通过主表关联
+			JSONObject tab = joinTabs.getJSONObject(i);
+			String ref = tab.getString("ref");
+			String refKey = tab.getString("refKey");
+			String jtype = (String)tab.get("jtype");
+			if("left".equals(jtype) || "right".equals(jtype)){
+				sql.append(" " + jtype);
 			}
+			sql.append(" join " + ref+ " " + tableAlias.get(ref));
+			sql.append(" on a0."+tab.getString("col")+"="+tableAlias.get(ref)+"."+refKey);
+			sql.append(" ");
 		}
 		sql.append(" where 1=1 ");
+		
 		//数据权限控制筛选
 		if(dataControl != null){
-			String ret = dataControl.process(VDOPUtils.getLoginedUser(),  tname);
+			String ret = dataControl.process(VDOPUtils.getLoginedUser(),  dset.getString("master"));
 			if(ret != null){
 				sql.append(ret + " ");
 			}
@@ -473,10 +714,7 @@ public class ChartService {
 		for(int i=0; i<dims.size(); i++){
 			DimInfo dim = dims.get(i);
 			if(dim.getType().equals("frd")  || "year".equals(dim.getType()) || "quarter".equals(dim.getType())){
-				if(dim.getTableName().length() > 0){
-					sql.append(" and t."+ dim.getColName() +" = t"+dim.getId()+"." + dim.getTableColKey());
-					
-				}
+				
 				//限制维度筛选
 				if(dim.getVals() != null && dim.getVals().length() > 0){
 					String  vls = dim.getVals();
@@ -525,14 +763,13 @@ public class ChartService {
 		//限制参数的查询条件
 		for(int i=0; params!=null&&i<params.size(); i++){
 			JSONObject param = params.getJSONObject(i);
-			int tid = param.getInt("tid");
-			int tid2 = new Integer(tinfo.get("tid").toString());
+			int cubeId = param.getInt("cubeId");
 			String tp = param.getString("type");
 			String colname = param.getString("colname");
 			String alias = param.getString("alias");
 			String dateformat = (String)param.get("dateformat");
 			//只有参数和组件都来源于同一个表，才能进行参数拼装
-			if(tid == tid2 && (tp.equals("frd") || "year".equals(tp) || "quarter".equals(tp))){
+			if((tp.equals("frd") || "year".equals(tp) || "quarter".equals(tp))){
 				if(release == 0 && param.get("vals") != null && param.getString("vals").length() > 0){
 					//字符串特殊处理
 					String  vls = param.getString("vals");
@@ -543,7 +780,7 @@ public class ChartService {
 				}else if(release == 1 || release == 2){
 					sql.append(" #if($"+alias+" != '') and " + colname + " in ($extUtils.printVals($"+alias+", '"+param.getString("valType")+"')) #end");
 				}
-			}else if(tid == tid2 && (tp.equals("day") || tp.equals("month"))){
+			}else if((tp.equals("day") || tp.equals("month"))){
 				if(release == 0 && param.get("st") != null && param.getString("st").length() > 0 ){
 					sql.append(" and " + colname + " between '"+ param.getString("st") + "' and '" +  param.getString("end") + "'");
 				}else if(release == 1){
@@ -572,10 +809,15 @@ public class ChartService {
 				DimInfo dim = dims.get(i);
 				String key = dim.getTableColKey();
 				String txt = dim.getTableColName();
+				String tname = dim.getTableName();
 				if(key != null && txt != null && key.length() >0 && txt.length() >0){
-					sql.append(key+", " + txt);
+					sql.append(tableAlias.get(tname)+"."+key+", " + tableAlias.get(tname) + "." + txt);
 				}else{
-					sql.append(dim.getColName());
+					if(dim.getCalc() == 1){
+						sql.append(dim.getColName());
+					}else{
+						sql.append(tableAlias.get(dim.getTname())+"."+dim.getColName());
+					}
 				}
 				if(i != dims.size() - 1){
 					sql.append(",");
@@ -634,7 +876,7 @@ public class ChartService {
 		}
 		String ret = sql.toString();
 		//替换 ## 为 函数，##在velocity中为注释意思
-		ret = ret.replaceAll("##", "\\$extUtils.printJH()").replaceAll("@", ",");
+		ret = ret.replaceAll("##", "\\$extUtils.printJH()").replaceAll("@", "'");
 		return ret;
 	}
 

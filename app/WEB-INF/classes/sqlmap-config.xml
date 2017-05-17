@@ -18,4 +18,5 @@
 	<sqlMap resource="config/frame/sqlmap-model.xml"/>
 	<sqlMap resource="config/frame/sqlmap-mbi.xml"/>
 	<sqlMap resource="config/frame/sqlmap-3g.xml"/>
+	<sqlMap resource="config/frame/sqlmap-bireport.xml"/>
 </sqlMapConfig>

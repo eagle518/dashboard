@@ -183,7 +183,7 @@ public class DBUtils {
 				String name = meta.getColumnName(i+1);
 				cols.add(name);
 			}
-			ret.add(cols);
+			//ret.add(cols);
 			int idx = 0;
 			while(rs.next() && idx <= n){
 				Map<String, Object> m = new HashMap<String, Object>();

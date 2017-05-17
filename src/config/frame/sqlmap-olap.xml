@@ -50,7 +50,7 @@ order by ord, dim_id
 	</select>
 	 -->
 	
-	<!--  根据指标查询所属表及表含有的指标 -->
+	<!--  根据指标查询所属表及表含有的指标 
 	<select id="queryTableByKpis" resultClass="java.util.HashMap">
 		select a.tid "tid", a.tname "tname", a.datecol "datecol", b.col_name "col_name", b.alias "alias", b.col_id "kpi_id" from (
 		select DISTINCT a.tid, b.tname,  b.datecol from olap_table_col_meta a, olap_table_meta b  
@@ -58,13 +58,7 @@ order by ord, dim_id
 		) a, olap_table_col_meta b where a.tid = b.tid and b.col_type = 2
 		order by a.tid
 	</select>
-	
-	<select id="getTable" resultClass="java.util.HashMap">
-	   select b.tid   "tid",
-       b.tname "tname", c.table_sql "sql"
-	  from olap_table_meta b, etl_src_meta c 
-	 where b.tid = #tid# and b.tid = c.table_id
-	</select>
+	-->
 	
 	<select id="queryDims" resultClass="java.util.HashMap">
 		select dim_id "dim_id", dim_tname "tname", col_key "key", col_name "name", dim_desc "desc", dim_type "type", cas_parent "iscas",
@@ -81,9 +75,9 @@ order by ord, dim_id
 	</select>
 	
 	<select id="queryDimCol" resultClass="java.util.HashMap">
-		select a.COL_NAME "col", b.TNAME "tname", c.col_key "colkey", c.col_name "colname", c.dim_type "dimType",
-		 dim_ord as "dimord", ordcol as "ordcol", d.table_sql as "tsql"
-		from olap_table_col_meta a, olap_table_meta b, olap_dim_list  c, etl_src_meta d
-		 where a.TID = b.TID and COL_TYPE = 1 and a.col_id = c.dim_id and b.tid = d.table_id and COL_ID = #dimId# and a.TID = #tid#
+		select a.COL_NAME "col", a.tname as "tname", col_table_name as "coltable", c.col_key "colkey", c.col_name "colname", c.dim_type "dimType",
+		 dim_ord as "dimord", ordcol as "ordcol"
+		from olap_cube_col_meta a, olap_cube_meta b, olap_dim_list  c
+		 where a.cube_id = b.cube_id and COL_TYPE = 1 and a.col_id = c.dim_id and COL_ID = #dimId# and a.cube_id = #cubeId#
 	</select>
 </sqlMap>

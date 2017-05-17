@@ -25,6 +25,12 @@
 		 	<fileset dir="${src.dir}" includes="portal-table.js" />
 		</concat>
 		
+		<concat destfile="${src.dir}/bireport-compress.js" encoding="utf-8" fixlastline="on">
+		 	<fileset dir="${src.dir}" includes="bichart.js" />
+		 	<fileset dir="${src.dir}" includes="bidrill.js" />
+		 	<fileset dir="${src.dir}" includes="bireport.js" />
+		 	<fileset dir="${src.dir}" includes="bitable.js" />
+		</concat>
 	</target>
 	
 	<!-- 压缩文件 -->
@@ -34,6 +40,7 @@
 	        	<fileset dir='${src.dir}/' >
 	        		<include name="model-compress.js"/>
 	        		<include name="portal-compress.js"/>
+	        		<include name="bireport-compress.js"/>
 	        	</fileset>		                  
 	    
 	            <arg line="-jar" />  
