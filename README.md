@@ -18,8 +18,8 @@
 
 <p/>
 
-文档地址： https://shatter.gitbooks.io/rsbi/content/
-演示地址： http://bi.rosetech.cn/ <br/>
+文档地址： https://shatter.gitbooks.io/rsbi/content/ <br/>
+演示地址： http://bi.rosetech.cn/  <br/>
 账号/口令：test/123456 <br/>
 
 <p/>
